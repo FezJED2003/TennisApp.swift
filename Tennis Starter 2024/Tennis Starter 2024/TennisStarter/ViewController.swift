@@ -162,13 +162,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 p2PointsLabel.text = "0"
                 serve()
                 serverUpdate()
-                saveMatchHistory()
                 game.extendClass.tieBreak = false
+                saveMatchHistory()
             } else {
                 game.extendClass.pointScore = 0
                 game.extendClass.pointScore2 = 0
                 game.extendClass.gamep2 += 1
                 p2GamesLabel.text = "\(game.extendClass.gamep2)"
+
                 
                 // Check for game win condition
                 if game.extendClass.gamep2 >= 6 && (game.extendClass.gamep2 - game.extendClass.gamep1) >= 2 {
@@ -179,6 +180,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     p2SetsLabel.text = "\(game.extendClass.setplayer2)"
                     p1GamesLabel.text = "0"
                     p2GamesLabel.text = "0"
+                    saveMatchHistory()
                 }
             }
             pointUpdateUI()
