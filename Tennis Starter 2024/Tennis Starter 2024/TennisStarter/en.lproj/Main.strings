@@ -1,0 +1,57 @@
+
+/* Class = "UILabel"; text = "-"; ObjectID = "6ei-zi-3lF"; */
+"6ei-zi-3lF.text" = "-";
+
+/* Class = "UIButton"; configuration.title = "Screen"; ObjectID = "8Y6-pG-5nR"; */
+"8Y6-pG-5nR.configuration.title" = "Screen";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "8kJ-KT-9fG"; */
+"8kJ-KT-9fG.text" = "-";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "BTB-5U-tgn"; */
+"BTB-5U-tgn.text" = "-";
+
+/* Class = "UILabel"; text = "Games"; ObjectID = "IvJ-eU-Y63"; */
+"IvJ-eU-Y63.text" = "Games";
+
+/* Class = "UIButton"; normalTitle = "Player 2"; ObjectID = "PYJ-wZ-WYb"; */
+"PYJ-wZ-WYb.normalTitle" = "Player 2";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "QFl-Tx-SPI"; */
+"QFl-Tx-SPI.text" = "-";
+
+/* Class = "UILabel"; text = "Sets"; ObjectID = "ULL-xe-9bZ"; */
+"ULL-xe-9bZ.text" = "Sets";
+
+/* Class = "UILabel"; text = "Player"; ObjectID = "YCu-9E-qpQ"; */
+"YCu-9E-qpQ.text" = "Player";
+
+/* Class = "UILabel"; text = "Player 2"; ObjectID = "bd7-eK-WCq"; */
+"bd7-eK-WCq.text" = "Player 2";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "bng-ny-Uzr"; */
+"bng-ny-Uzr.text" = "-";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "hI5-rX-DoM"; */
+"hI5-rX-DoM.text" = "-";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "lpu-uA-9gh"; */
+"lpu-uA-9gh.text" = "-";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "mNH-8b-hFQ"; */
+"mNH-8b-hFQ.text" = "Points";
+
+/* Class = "UIButton"; normalTitle = "Player 1"; ObjectID = "p6c-ia-SVl"; */
+"p6c-ia-SVl.normalTitle" = "Player 1";
+
+/* Class = "UILabel"; text = "Player 1"; ObjectID = "rqQ-Pb-r7o"; */
+"rqQ-Pb-r7o.text" = "Player 1";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "rtX-yz-HZy"; */
+"rtX-yz-HZy.text" = "-";
+
+/* Class = "UILabel"; text = "Set Scores"; ObjectID = "tAc-0J-hRY"; */
+"tAc-0J-hRY.text" = "Set Scores";
+
+/* Class = "UIButton"; normalTitle = "Restart"; ObjectID = "v1E-c6-fqw"; */
+"v1E-c6-fqw.normalTitle" = "Restart";
