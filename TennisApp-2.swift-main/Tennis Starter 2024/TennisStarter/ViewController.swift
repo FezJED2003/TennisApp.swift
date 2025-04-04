@@ -6,6 +6,10 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var game = Game()
+    var extendClass = ExtendedClass()
+    var logic: GameLogic!
+    
+//    lazy var logic = GameLogic(game: game, extendClass: extendClass)
     //var externalView = ExternalView()
     var audio: AVAudioPlayer?
     let locationManager = CLLocationManager()
@@ -14,46 +18,56 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let matchLocation = CLLocation(latitude:51.5074 , longitude: -0.1278)
     let currentMatch = CLLocation (latitude: 40.748750, longitude: -73.843638)
     
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         locationUser = location
         updateDistance()
-        
+
+        // Get user's current location
         getCityAndCountry(for: location) { userLocationName in
             DispatchQueue.main.async {
                 self.LocationFrom.text = "You are in \(userLocationName ?? "Unknown Location")"
             }
         }
-        
+
+        // Get current match location
         getCityAndCountry(for: currentMatch) { matchLocationName in
             DispatchQueue.main.async {
                 self.currentMatchLabel.text = "Current Match: \(matchLocationName ?? "Unknown Location")"
             }
         }
-    }
-    
-    func updateDistance() {
-        guard let userLoc = locationUser else { return }
-        
-        let distanceToMatch = userLoc.distance(from: matchLocation) / 1000
-        DispatchQueue.main.async {
-            self.locationLabel.text = "London Match: \(String(format: "%.2f", distanceToMatch)) km away"
-        }
-    }
-    
-    func getCityAndCountry(for location: CLLocation, completion: @escaping (String?) -> Void) {
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            guard let placemark = placemarks?.first, error == nil else {
-                completion(nil)
-                return
+
+        // Get future match location (London match in this case)
+        getCityAndCountry(for: matchLocation) { futureMatchLocationName in
+            DispatchQueue.main.async {
+                self.locationLabel.text = "Future Match: \(futureMatchLocationName ?? "Unknown Location")"
             }
-            
-            let city = placemark.locality ?? "Unknown City"
-            let country = placemark.country ?? "Unknown Country"
-            completion("\(city), \(country)")
         }
     }
+
+        func updateDistance() {
+            guard let userLoc = locationUser else { return }
+            
+            let distanceToMatch = userLoc.distance(from: matchLocation) / 1000
+            DispatchQueue.main.async {
+                self.locationLabel.text = "London Match: \(String(format: "%.2f", distanceToMatch)) km away"
+            }
+        }
+        
+        func getCityAndCountry(for location: CLLocation, completion: @escaping (String?) -> Void) {
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                guard let placemark = placemarks?.first, error == nil else {
+                    completion(nil)
+                    return
+                }
+                
+                let city = placemark.locality ?? "Unknown City"
+                let country = placemark.country ?? "Unknown Country"
+                completion("\(city), \(country)")
+            }
+        }
     
     
     
@@ -103,7 +117,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 p2GamesLabel.text = "0"
                 p1PointsLabel.text = "0"
                 p2PointsLabel.text = "0"
-                serve()
+                logic.serve()
                 serverUpdate()
                 
                 game.extendClass.tieBreak = false
@@ -152,7 +166,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 p2GamesLabel.text = "0"
                 p1PointsLabel.text = "0"
                 p2PointsLabel.text = "0"
-                serve()
+                logic.serve()
                 serverUpdate()
                 game.extendClass.tieBreak = false
             } else {
@@ -369,8 +383,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             name: UIScene.didDisconnectNotification,
             object: nil
         )
+        logic = GameLogic (game: game , extendClass: extendClass, viewController: self)
     }
-    
+     
     @IBAction func buttonPressed(_ sender: UIButton) {
         let screens = UIScreen.screens
         guard screens.count > 1 else {
@@ -463,7 +478,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     func gameWon () {
-        serve()
+        logic.serve()
         if game.extendClass.setplayer1 == 3 || game.extendClass.setplayer2 == 3{
             
             p1Button.isEnabled = false
@@ -488,43 +503,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         p2SetsLabel.text = "0"
         p1Button.isEnabled = true
         p2Button.isEnabled = true
-        game.extendClass.gamep1 = 0
-        game.extendClass.gamep2 = 0
-        game.extendClass.tieBreakp1 = 0
-        game.extendClass.tieBreakp2 = 0
-        game.extendClass.setplayer1 = 0
-        game.extendClass.setplayer2 = 0
         p1GamesLabel.backgroundColor = UIColor.clear
         p2GamesLabel.backgroundColor = UIColor.clear
         p1SetsLabel.backgroundColor = UIColor.clear
         p2SetsLabel.backgroundColor = UIColor.clear
         p1PointsLabel.backgroundColor = UIColor.clear
         p2PointsLabel.backgroundColor = UIColor.clear
+        logic.ResetScores()
         
     }
     
     
     
-    func serve() {
-        if game.extendClass.tieBreak {
-            let totalTiebreakPoints = game.extendClass.tieBreakp1 + game.extendClass.tieBreakp2 + game.extendClass.pointsCount
-            
-            if totalTiebreakPoints == 0 {
-                game.extendClass.currentServe = 1
-            } else if totalTiebreakPoints == 1 {
-                game.extendClass.currentServe = 2
-            } else {
-                let index = (totalTiebreakPoints - 1) / 2
-                game.extendClass.currentServe = (index % 2 == 0) ? 2 : 1
-            }
-        } else {
-            game.extendClass.totalGamePoint = game.extendClass.gamep1 + game.extendClass.gamep2 + game.extendClass.pointsCount
-            let totalGames = game.extendClass.totalGamePoint
-            game.extendClass.currentServe = (totalGames % 2 == 0) ? 1 : 2
-        }
-        
-        serverUpdate()
-    }
+    
+    
+   
     
     func serverUpdate() {
         if game.extendClass.currentServe == 1 {
@@ -544,7 +537,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     
+    
     func tieBreakEnabled() {
+        
         // Checking if both players have 6 games each, enabling tie-break
         if game.extendClass.gamep1 == 6 && game.extendClass.gamep2 == 6 {
             game.extendClass.tieBreak = true
@@ -552,11 +547,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             p2PointsLabel.text = "0"
         }
         
-        // If tie-break is enabled, update the points with tie-break points
         if game.extendClass.tieBreak {
             p1PointsLabel.text = "\(game.extendClass.tieBreakp1)"
             p2PointsLabel.text = "\(game.extendClass.tieBreakp2)"
-            serve() // Call the serve function when tie-break is enabled
+            logic.serve() // Call the serve function when tie-break is enabled
         } else {
             // Otherwise, display regular points
             p1PointsLabel.text = game.player1Score()
@@ -584,7 +578,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func pointUpdateUI(){
         
         
-        finalSet()
         tieBreakEnabled()
         isTieBreakEnabled()
         
@@ -592,8 +585,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         player1Wins()
         player2Wins()
         serverUpdate()
-        
-        
+        overridenSets()
         
         
         
@@ -601,28 +593,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    func finalSet(){
-        
-        if game.extendClass.setplayer1 == 2 && game.extendClass.setplayer2 == 2 {
-            
-            if game.extendClass.gamep1 >= 6 && game.extendClass.gamep1 >= game.extendClass.gamep2 + 2{
-                
-                game.extendClass.setplayer1 += 1
-                
-            } else if game.extendClass.gamep2 >= 6 && game.extendClass.gamep2 >= game.extendClass.gamep1{
-                
-                game.extendClass.setplayer2 += 1
-                
-            }
-            
-            
-            
-        }
-        
-        
-        
-        
-    }
+    
     
     
     
@@ -642,6 +613,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         checkGreen()
         ExternalDisplayUpdate()
         sound()
+        logic.finalSet()
+
+        
     }
     
     @IBAction func p2AddPointPressed(_ sender: UIButton) {
@@ -653,10 +627,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         checkGreen()
         ExternalDisplayUpdate()
         sound()
+        logic.finalSet()
+
     }
     
     @IBAction func restartPressed(_ sender: AnyObject) {
         gameRestart()
+        logic.ResetScores()
         ExternalDisplayUpdate()
         
         

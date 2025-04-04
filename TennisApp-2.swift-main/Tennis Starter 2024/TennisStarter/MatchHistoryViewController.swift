@@ -8,7 +8,7 @@ class MatchHistoryViewController: UIViewController {
         super.viewDidLoad()
         
         let history = loadMatchHistory()
-        
+        // display the seriliazed data 
         let historyText = history.matches.map { match in
             return "\(match.date)\n\(match.player1) vs \(match.player2) - \(match.score)\n"
         }.joined(separator: "\n")
