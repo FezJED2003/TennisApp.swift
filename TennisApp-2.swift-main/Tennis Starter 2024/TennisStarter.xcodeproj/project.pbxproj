@@ -12,6 +12,8 @@
 		2F498FE12D74CEC600B9F5FC /* ExtendedClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F498FDF2D74CEBE00B9F5FC /* ExtendedClass.swift */; };
 		2F699FAA2DA0490400D3B4D0 /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F699FA92DA048FB00D3B4D0 /* GameLogic.swift */; };
 		2F699FAB2DA0490400D3B4D0 /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F699FA92DA048FB00D3B4D0 /* GameLogic.swift */; };
+		2F699FAD2DA0B00D00D3B4D0 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F699FAC2DA0AFFF00D3B4D0 /* CalendarManager.swift */; };
+		2F699FAE2DA0B00D00D3B4D0 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F699FAC2DA0AFFF00D3B4D0 /* CalendarManager.swift */; };
 		2FDC4D842D9C3754003DC862 /* MatchRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC4D832D9C3747003DC862 /* MatchRecord.swift */; };
 		2FDC4D852D9C3754003DC862 /* MatchRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC4D832D9C3747003DC862 /* MatchRecord.swift */; };
 		2FEEFB1A2D9833400022AFB6 /* TennisHistory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2FEEFB192D98332F0022AFB6 /* TennisHistory.txt */; };
@@ -45,6 +47,7 @@
 		2F47C9172D87733E005F8B53 /* GameTests2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests2.swift; sourceTree = "<group>"; };
 		2F498FDF2D74CEBE00B9F5FC /* ExtendedClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedClass.swift; sourceTree = "<group>"; };
 		2F699FA92DA048FB00D3B4D0 /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
+		2F699FAC2DA0AFFF00D3B4D0 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		2FDC4D832D9C3747003DC862 /* MatchRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRecord.swift; sourceTree = "<group>"; };
 		2FEEFB192D98332F0022AFB6 /* TennisHistory.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TennisHistory.txt; sourceTree = "<group>"; };
 		2FF1A2EA2D9C3A5B0026206A /* MatchHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchHistoryViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +115,7 @@
 				BBA6F8FA1B26E81E006642BC /* Game.swift */,
 				2F699FA92DA048FB00D3B4D0 /* GameLogic.swift */,
 				2FDC4D832D9C3747003DC862 /* MatchRecord.swift */,
+				2F699FAC2DA0AFFF00D3B4D0 /* CalendarManager.swift */,
 				2F498FDF2D74CEBE00B9F5FC /* ExtendedClass.swift */,
 			);
 			path = TennisStarter;
@@ -259,6 +263,7 @@
 				2F498FE12D74CEC600B9F5FC /* ExtendedClass.swift in Sources */,
 				BBA6F8FB1B26E81E006642BC /* Game.swift in Sources */,
 				2FF1A2EB2D9C3A870026206A /* MatchHistoryViewController.swift in Sources */,
+				2F699FAE2DA0B00D00D3B4D0 /* CalendarManager.swift in Sources */,
 				BBA6F8DB1B26E78E006642BC /* AppDelegate.swift in Sources */,
 				2F699FAB2DA0490400D3B4D0 /* GameLogic.swift in Sources */,
 			);
@@ -271,6 +276,7 @@
 				49F4A80B1FFD36F6004C17A9 /* ViewController.swift in Sources */,
 				2F498FE02D74CEC600B9F5FC /* ExtendedClass.swift in Sources */,
 				2F699FAA2DA0490400D3B4D0 /* GameLogic.swift in Sources */,
+				2F699FAD2DA0B00D00D3B4D0 /* CalendarManager.swift in Sources */,
 				2FDC4D852D9C3754003DC862 /* MatchRecord.swift in Sources */,
 				496B3CDE1CE0BAA80090A701 /* Game.swift in Sources */,
 				BBA6F8FD1B26E86B006642BC /* GameTests.swift in Sources */,

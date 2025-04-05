@@ -2,7 +2,7 @@ class Game {
   
      var extendClass = ExtendedClass()
     
-    
+    // purpose of extend class to add more points to extram players
    
     
     /**

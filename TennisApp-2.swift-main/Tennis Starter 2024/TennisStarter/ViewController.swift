@@ -8,9 +8,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var game = Game()
     var extendClass = ExtendedClass()
     var logic: GameLogic!
+    let calenderManager = CalendarManager ()
     
-//    lazy var logic = GameLogic(game: game, extendClass: extendClass)
-    //var externalView = ExternalView()
     var audio: AVAudioPlayer?
     let locationManager = CLLocationManager()
     var locationUser : CLLocation?
@@ -137,7 +136,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     p1GamesLabel.text = "0"
                     p2GamesLabel.text = "0"
                     saveMatchHistory()
-                }
+                    
+                    let nextMatchDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+                        let calendarManager = CalendarManager()
+
+                        let player1 = p1NameLabel.text ?? "Player 1"
+                        let player2 = p2NameLabel.text ?? "Player 2"
+
+                        calendarManager.scheduleMatch(
+                            title: "Next Match: (player1) vs (player2)",
+                            date: nextMatchDate,
+                            on: self
+                        )
+                    }
                 
                 // Start tiebreak if the game reaches 6-6
                 if game.extendClass.setplayer1 == 6 && game.extendClass.setplayer2 == 6 {
@@ -185,6 +196,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     p1GamesLabel.text = "0"
                     p2GamesLabel.text = "0"
                     saveMatchHistory()
+                    let nextMatchDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+                        let calendarManager = CalendarManager()
+
+                        let player1 = p1NameLabel.text ?? "Player 1"
+                        let player2 = p2NameLabel.text ?? "Player 2"
+
+                        calendarManager.scheduleMatch(
+                            title: "Next Match: (player1) vs (player2)",
+                            date: nextMatchDate,
+                            on: self
+                        )
                 }
             }
             pointUpdateUI()
@@ -193,23 +215,42 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func saveMatchHistory() {
         let player1 = p1NameLabel.text ?? "Player 1"
         let player2 = p2NameLabel.text ?? "Player 2"
-        
-        let score = "(game.extendClass.setplayer1) - (game.extendClass.setplayer2)"
+        let score = "\(game.extendClass.setplayer1) - \(game.extendClass.setplayer2)"
         
         var locationText = "Unknown Location"
+        
         if let userLoc = locationUser {
             getCityAndCountry(for: userLoc) { userLocationName in
                 locationText = userLocationName ?? "Unknown Location"
-                
-                // Save match with location
-                let matchInfo = "(player1) vs (player2) - (score) ((locationText))"
+                let matchInfo = "\(player1) vs \(player2) - \(score) (\(locationText))"
                 addMatchToHistory(player1: player1, player2: player2, score: matchInfo)
+                self.scheduleNextMatch(player1: player1, player2: player2)
             }
         } else {
-            let matchInfo = "(player1) vs (player2) - (score)"
+            let matchInfo = "\(player1) vs \(player2) - \(score)"
             addMatchToHistory(player1: player1, player2: player2, score: matchInfo)
+            let nextMatchDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+            calenderManager.scheduleMatch(title: "Next Match: (player1) vs (player2)", date: nextMatchDate, on: self)
+            scheduleNextMatch(player1: player1, player2: player2)
         }
     }
+    
+    
+    func scheduleNextMatch(player1: String, player2: String) {
+        let nextMatchDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        let matchTitle = "Next Match: (player1) vs (player2)"
+        calenderManager.scheduleMatch(title: matchTitle, date: nextMatchDate, on: self)
+
+        let alert = UIAlertController(title: "Next Match Scheduled", message: "A match has been added to your calendar for tomorrow.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
+    let nextMatchDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+    let calendarManager = CalendarManager()
+
+
+    
     
     
     func startClear () {
@@ -367,7 +408,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        
+  
         
         // Engage notification center
         NotificationCenter.default.addObserver(
